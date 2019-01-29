@@ -30,6 +30,7 @@ object DataStoreQueryEntities {
     val qb = Query.newBuilder()
     qb.addKindBuilder().setName(myOpt.getKind)
     qb.setLimit(qb.getLimitBuilder.setValue(myOpt.getLimit).build())
+    // datastore() method takes namespace argument also.
     sc.datastore(projectId, qb.build())
       .map(e => {
         val keyPartition = TreeMap(

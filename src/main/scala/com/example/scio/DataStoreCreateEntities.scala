@@ -28,8 +28,11 @@ object DataStoreCreateEntities {
 
     sc.parallelize(1 to 5)
       .map(e => {
+        val kb = makeKey("MyEntity", java.lang.Long.valueOf(e))
+        // If want to specify namespace.
+        //kb.setPartitionId(kb.getPartitionIdBuilder.setNamespaceId("myns").build())
         entityType.toEntityBuilder(MyEntity(id = e + 30, name = s"name${e}", updated = now))
-          .setKey(makeKey("MyEntity", java.lang.Long.valueOf(e)))
+          .setKey(kb)
           .build()
       })
       .saveAsDatastore(projectId)
